@@ -1,5 +1,6 @@
 package com.fordevs.restcontroller.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,7 +33,8 @@ public class Students {
     @Column(name = "is_active")
     private String student_status;
 
-    @OneToMany(mappedBy = "students", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SubjectsLearning> subjectsLearning;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    List<SubjectsLearning> subjectsLearning;
 
 }
