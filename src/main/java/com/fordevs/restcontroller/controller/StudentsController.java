@@ -1,8 +1,11 @@
 package com.fordevs.restcontroller.controller;
 
 import com.fordevs.restcontroller.model.Students;
+import com.fordevs.restcontroller.model.SubjectsLearning;
 import com.fordevs.restcontroller.repository.StudentsRepository;
 import com.fordevs.restcontroller.repository.SubjectsLearningRepository;
+import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/students")
+@Slf4j
 public class StudentsController {
     @Autowired
     private StudentsRepository studentsRepository;
@@ -33,12 +38,17 @@ public class StudentsController {
 
     // Get Student by ID
     @GetMapping("/all/{id}")
-    public ResponseEntity<Students> getStudentById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getStudentById(@PathVariable("id") Long id) {
         try {
-            Students students = studentsRepository.findById(id).get();
-            return new ResponseEntity<>(students, HttpStatus.OK);
+            Optional<Students> students = studentsRepository.findById(id);
+            if(students.isPresent()){
+                return new ResponseEntity<>(students.get(), HttpStatus.OK);
+            }else{
+                log.error("Student not found with id: " + id);
+                return new ResponseEntity<>("Student not found with id: " + id, HttpStatus.NOT_FOUND);
+            }
         }catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error getting student with id:" + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -70,14 +80,34 @@ public class StudentsController {
     }
 
     // Delete Student
+    @Transactional
     @DeleteMapping("/student/{id}")
-    public ResponseEntity<HttpStatus> deleteStudent(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteStudent(@PathVariable("id") Long id) {
         try {
-            subjectsLearningRepository.deleteById(id);
+            // Find Student to delete
+            Optional<Students> studentsOptional = studentsRepository.findById(id);
+            if(!studentsOptional.isPresent()){
+                log.error("Student Not Found with id:" + id);
+                return new ResponseEntity<>("Student Not Found with id:" + id, HttpStatus.NOT_FOUND);
+            }
+            Students students = studentsOptional.get();
+
+            // Find and unlink SubjectsLearnings student references
+            List<SubjectsLearning> subjectsLearning = subjectsLearningRepository.findAllByStudentId_Id(students.getId());
+
+            for(SubjectsLearning subject : subjectsLearning) {
+                subject.setStudent(null);
+                subjectsLearningRepository.save(subject);
+
+            }
+
+            // Delete Student
             studentsRepository.deleteById(id);
+            log.info("Student deleted with id:" + id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error("Could not delete Student with id:" + id);
+            return new ResponseEntity<>("Cant delete student with id: " + id,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
