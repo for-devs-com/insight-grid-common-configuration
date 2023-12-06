@@ -1,12 +1,13 @@
 package com.fordevs.restcontroller.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "subject_learning")
+@Table(name = "subjects_learning")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,7 +21,8 @@ public class SubjectsLearning {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", nullable = false)
-    private Students students;
+    @JsonBackReference
+    private Students student;
 
     @Column(name = "marks_obtained")
     private Long marks_obtained;
