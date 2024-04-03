@@ -4,6 +4,7 @@ import com.fordevs.restcontroller.model.Students;
 import com.fordevs.restcontroller.model.SubjectsLearning;
 import com.fordevs.restcontroller.repository.StudentsRepository;
 import com.fordevs.restcontroller.repository.SubjectsLearningRepository;
+import com.fordevs.restcontroller.services.ProducerService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class StudentsController {
     private StudentsRepository studentsRepository;
     @Autowired
     private SubjectsLearningRepository subjectsLearningRepository;
+    @Autowired
+    private ProducerService producerService;
 
     // Get All Students
     @GetMapping("/all")
@@ -57,6 +60,8 @@ public class StudentsController {
     public ResponseEntity<Students> createStudent(@RequestBody Students students) {
         try {
             Students _students = studentsRepository.save(students);
+            producerService.sendMessage("student", "Student Created with id:" + _students.getId());
+
             return new ResponseEntity<>(_students, HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
