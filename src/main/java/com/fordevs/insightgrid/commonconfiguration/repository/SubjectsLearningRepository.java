@@ -1,6 +1,6 @@
-package com.fordevs.restcontroller.repository;
+package com.fordevs.insightgrid.commonconfiguration.repository;
 
-import com.fordevs.restcontroller.model.SubjectsLearning;
+import com.fordevs.insightgrid.commonconfiguration.model.SubjectsLearning;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

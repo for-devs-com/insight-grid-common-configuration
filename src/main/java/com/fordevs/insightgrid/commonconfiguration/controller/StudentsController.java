@@ -1,10 +1,10 @@
-package com.fordevs.restcontroller.controller;
+package com.fordevs.insightgrid.commonconfiguration.controller;
 
-import com.fordevs.restcontroller.model.Students;
-import com.fordevs.restcontroller.model.SubjectsLearning;
-import com.fordevs.restcontroller.repository.StudentsRepository;
-import com.fordevs.restcontroller.repository.SubjectsLearningRepository;
-import com.fordevs.restcontroller.services.ProducerService;
+import com.fordevs.insightgrid.commonconfiguration.model.Students;
+import com.fordevs.insightgrid.commonconfiguration.model.SubjectsLearning;
+import com.fordevs.insightgrid.commonconfiguration.repository.StudentsRepository;
+import com.fordevs.insightgrid.commonconfiguration.services.ProducerService;
+import com.fordevs.insightgrid.commonconfiguration.repository.SubjectsLearningRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

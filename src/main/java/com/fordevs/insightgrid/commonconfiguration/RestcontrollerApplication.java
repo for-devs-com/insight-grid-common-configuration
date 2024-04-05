@@ -1,4 +1,4 @@
-package com.fordevs.restcontroller;
+package com.fordevs.insightgrid.commonconfiguration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

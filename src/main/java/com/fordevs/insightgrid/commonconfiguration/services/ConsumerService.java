@@ -1,4 +1,4 @@
-package com.fordevs.restcontroller.services;
+package com.fordevs.insightgrid.commonconfiguration.services;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;

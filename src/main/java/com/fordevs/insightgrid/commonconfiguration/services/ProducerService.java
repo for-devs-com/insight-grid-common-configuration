@@ -1,4 +1,4 @@
-package com.fordevs.restcontroller.services;
+package com.fordevs.insightgrid.commonconfiguration.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;

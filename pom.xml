@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.fordevs</groupId>
-    <artifactId>restcontroller</artifactId>
+    <artifactId>insight-grid-common-configuration</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>restcontroller</name>
-    <description>restcontroller</description>
+    <name>insight-grid-common-configuration</name>
+    <description>insight-grid-common-configuration</description>
     <properties>
         <java.version>17</java.version>
     </properties>

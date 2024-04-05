@@ -1,4 +1,4 @@
-package com.fordevs.restcontroller.model;
+package com.fordevs.insightgrid.commonconfiguration.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
